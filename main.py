@@ -6,64 +6,12 @@ from itertools import cycle
 
 client = commands.Bot(command_prefix="-")
 client.remove_command("help")
-client_status = cycle(["working overtime", "listening to music subjectively good in my opinion", "playing some videogames", "contemplating robot existance", "trying to be online", "listening to -ehelp", "Zacky is my developer"])
+client_status = cycle(["working overtime", "listening to music subjectively good in my opinion", "playing some videogames", "contemplating robot existance", "trying to be online", "listening to -ehelp", "Zacky is my developer", "Dking is Grinding"])
 
 @client.event
 async def on_ready():
     print("i'm online yey")
     change_status.start()
-
-@client.event
-async def on_command_error(self, ctx, error):
-        # if command has local error handler, return
-        if hasattr(ctx.command, 'on_error'):
-            return
-
-        # get the original exception
-        error = getattr(error, 'original', error)
-
-        if isinstance(error, commands.CommandNotFound):
-            return
-
-        if isinstance(error, commands.BotMissingPermissions):
-            missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
-            if len(missing) > 2:
-                fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
-            else:
-                fmt = ' and '.join(missing)
-            _message = 'I need the **{}** permission(s) to run this command.'.format(fmt)
-            await ctx.send(_message)
-            return
-
-        if isinstance(error, commands.DisabledCommand):
-            await ctx.send('This command has been disabled.')
-            return
-
-        if isinstance(error, commands.MissingPermissions):
-            missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
-            if len(missing) > 2:
-                fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
-            else:
-                fmt = ' and '.join(missing)
-            _message = 'You need the **{}** permission(s) to use this command.'.format(fmt)
-            await ctx.send(_message)
-            return
-
-        if isinstance(error, commands.UserInputError):
-            await ctx.send("Invalid input.")
-            await self.send_command_help(ctx)
-            return
-
-        if isinstance(error, commands.NoPrivateMessage):
-            try:
-                await ctx.author.send('This command cannot be used in direct messages.')
-            except discord.Forbidden:
-                pass
-            return
-
-        if isinstance(error, commands.CheckFailure):
-            await ctx.send("You do not have permission to use this command.")
-            return
 
 @tasks.loop(minutes=2)
 async def change_status():
@@ -83,38 +31,41 @@ async def ehelp(ctx: commands.Context):
 #another code by Dking
 @client.command() 
 async def erand(ctx: commands.Context, *, args):
-    reply: str = args
+    try: 
+        reply: str = args
 
-    emojis: dict = {}
-    for i in ctx.guild.emojis:
-        if i.animated: 
-            emojis[f"{i.name}"]: str = f"<a:{i.name}:{i.id}>"
-        else: 
-            emojis[f"{i.name}"]: str = f"<:{i.name}:{i.id}>"
+        emojis: dict = {}
+        for i in ctx.guild.emojis:
+            if i.animated: 
+                emojis[f"{i.name}"]: str = f"<a:{i.name}:{i.id}>"
+            else: 
+                emojis[f"{i.name}"]: str = f"<:{i.name}:{i.id}>"
 
-    for emoji in emojis: reply: str = reply.replace(emoji, emojis[emoji])
+        for emoji in emojis: reply: str = reply.replace(emoji, emojis[emoji])
 
-    reply = random.choice(reply.split(' '))
+        reply = random.choice(reply.split(' '))
 
-    # Sending reply
-    await ctx.message.delete() # deleting original message
-    if reply in emojis: # if it's a single emoji a arg, set emoji to embed image
-        await ctx.send(embed=Embed(
-            color=Color.from_hsv(random(), 1, 1)
-        ).set_author(
-            name=f'{ctx.author}',
-            icon_url=f'https://cdn.discordapp.com/avatars/{ctx.author.id}/{ctx.author.avatar}.png'
-        ).set_image(
-            url=client.get_emoji(int(emojis[args][-19:-1])).url
-        ))
-    else: # else send formated string as embed description
-        await ctx.send(embed=Embed(
-            description=reply,
-            color=Color.from_hsv(random(), 1, 1)
-        ).set_author(
-            name=f'{ctx.author}',
-            icon_url=f'https://cdn.discordapp.com/avatars/{ctx.author.id}/{ctx.author.avatar}.png'
-        ))
+        # Sending reply
+        await ctx.message.delete() # deleting original message
+        if reply in emojis: # if it's a single emoji a arg, set emoji to embed image
+            await ctx.send(embed=Embed(
+                color=Color.from_hsv(random(), 1, 1)
+            ).set_author(
+                name=f'{ctx.author}',
+                icon_url=f'https://cdn.discordapp.com/avatars/{ctx.author.id}/{ctx.author.avatar}.png'
+            ).set_image(
+                url=client.get_emoji(int(emojis[args][-19:-1])).url
+            ))
+        else: # else send formated string as embed description
+            await ctx.send(embed=Embed(
+                description=reply,
+                color=Color.from_hsv(random(), 1, 1)
+            ).set_author(
+                name=f'{ctx.author}',
+                icon_url=f'https://cdn.discordapp.com/avatars/{ctx.author.id}/{ctx.author.avatar}.png'
+            ))
+    except Exception as e:
+        await ctx.send(e)
 
 @client.command() 
 async def e(ctx: commands.Context, *, args):
