@@ -13,6 +13,10 @@ async def on_ready():
     print("i'm online yey")
     change_status.start()
 
+@client.event
+async def on_command_error(ctx, error):
+    pass
+
 @tasks.loop(minutes=2)
 async def change_status():
     await client.change_presence(activity=Game(next(client_status)))
