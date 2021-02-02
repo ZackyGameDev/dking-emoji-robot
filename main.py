@@ -46,8 +46,7 @@ async def erand(ctx: commands.Context, *, args):
 
         for emoji in emojis: reply: str = reply.replace(emoji, emojis[emoji])
 
-        reply = random.choices(reply.split(' '))
-        # Sending reply
+        reply = reply.split(' ')[random.randint(0, len(reply.split(' '))-1)]
         #await ctx.message.delete() # deleting original message
         if reply in emojis: # if it's a single emoji a arg, set emoji to embed image
             await ctx.send(embed=Embed(
