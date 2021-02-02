@@ -45,8 +45,8 @@ async def eping(ctx):
     end = time.perf_counter()
     duration = (end - start) * 1000
     await message.edit(embed=Embed(
-        description=':stopwatch: Response Delay: {:.2f}ms'.format(
-            duration) + f"\n:heartbeat: Websocket Latency: {round(client.latency*1000)}ms",
+        description=':stopwatch: **Response Delay: {:.2f}ms'.format(
+            duration) + f"**\n:heartbeat: **Websocket Latency: {round(client.latency*1000)}ms**",
         color=Color.green()
     ))
     
@@ -58,7 +58,6 @@ async def change_status():
 @client.command() 
 async def ehelp(ctx: commands.Context):
     await ctx.send(embed=Embed(
-        # description='Commands: \n `-e text` Use this command to use nitro emojis, example, `-e sundarDasta is og`\n`-erand choice` Use this command to let this bot choose from your arguments (emojis also supported), example, `-erand sundarDasta 69`',
         description=help_message,
         color=Color.from_hsv(random(), 1, 1)
     ).set_author(
