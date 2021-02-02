@@ -1,5 +1,5 @@
 import os
-from random import random
+import random
 from discord import Game, Embed, Color
 from discord.ext import commands, tasks
 from itertools import cycle
@@ -24,7 +24,7 @@ async def change_status():
 @client.command() 
 async def ehelp(ctx: commands.Context):
     await ctx.send(embed=Embed(
-        description='Commands: \n `-e text` Use this command to use nitro emojis, example, `-e sundarDasta is og`\n`-erand choices` Use this command to let this bot choose from your arguments (emojis also supported), example, `-erand sundarDasta 69`',
+        description='Commands: \n `-e text` Use this command to use nitro emojis, example, `-e sundarDasta is og`\n`-erand choice` Use this command to let this bot choose from your arguments (emojis also supported), example, `-erand sundarDasta 69`',
         color=Color.from_hsv(random(), 1, 1)
     ).set_author(
         name=f'{ctx.me}',
