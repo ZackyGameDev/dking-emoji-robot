@@ -37,16 +37,16 @@ async def on_command_error(ctx, error):
 @client.command()
 async def eping(ctx):
     start = time.perf_counter()
-    message = await ctx.send(embed=discord.Embed(
+    message = await ctx.send(embed=Embed(
         description="Calculating Ping...",
-        color=discord.Color.red()
+        color=Color.red()
     ))
     end = time.perf_counter()
     duration = (end - start) * 1000
-    await message.edit(embed=discord.Embed(
+    await message.edit(embed=Embed(
         title='Response Delay: {:.2f}ms'.format(
             duration) + f"\nWebsocket Latency: {round(client.latency*1000)}ms",
-        color=discord.Color.green()
+        color=Color.green()
     ))
     
 @tasks.loop(minutes=2)
