@@ -9,6 +9,22 @@ client = commands.Bot(command_prefix="-", case_insensitive=True)
 client.remove_command("help")
 client_status = cycle(["working overtime", "listening to music subjectively good in my opinion", "playing some videogames", "contemplating robot existance", "trying to be online", "listening to -ehelp", "Zacky is my developer", "Dking is Grinding"])
 
+help_message = """
+`-e <text>`:
+Use this command to use nitro emojis.
+e.g. `-e sundarDasta is og`
+
+`-erand <randomOptionsToSelectFrom>`:
+Use this command to let this bot choose from your arguments (emojis also supported)
+e.g. `-erand sundarDasta 69`
+
+`-ePing`:
+See the latency of this robot
+
+`-ehelp`:
+Shows this message
+"""
+
 @client.event
 async def on_ready():
     print("i'm online yey")
@@ -41,7 +57,8 @@ async def change_status():
 @client.command() 
 async def ehelp(ctx: commands.Context):
     await ctx.send(embed=Embed(
-        description='Commands: \n `-e text` Use this command to use nitro emojis, example, `-e sundarDasta is og`\n`-erand choice` Use this command to let this bot choose from your arguments (emojis also supported), example, `-erand sundarDasta 69`',
+        # description='Commands: \n `-e text` Use this command to use nitro emojis, example, `-e sundarDasta is og`\n`-erand choice` Use this command to let this bot choose from your arguments (emojis also supported), example, `-erand sundarDasta 69`',
+        description=help_message,
         color=Color.from_hsv(random(), 1, 1)
     ).set_author(
         name=f'{ctx.me}',
