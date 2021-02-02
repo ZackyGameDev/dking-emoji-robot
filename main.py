@@ -42,7 +42,7 @@ async def erand(ctx: commands.Context, *, args):
 
     for emoji in emojis: reply: str = reply.replace(emoji, emojis[emoji])
 
-    args = random.choice(reply.split())
+    args = random.choice(reply.split(' '))
 
     # Sending reply
     await ctx.message.delete() # deleting original message
