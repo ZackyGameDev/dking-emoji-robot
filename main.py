@@ -29,6 +29,7 @@ Shows this message
 async def on_ready():
     print("i'm online yey")
     change_status.start()
+    
 @client.event
 async def on_command_error(ctx, error):
     await ctx.send(error)
@@ -44,8 +45,8 @@ async def eping(ctx):
     end = time.perf_counter()
     duration = (end - start) * 1000
     await message.edit(embed=Embed(
-        title='Response Delay: {:.2f}ms'.format(
-            duration) + f"\nWebsocket Latency: {round(client.latency*1000)}ms",
+        description=':stopwatch: Response Delay: {:.2f}ms'.format(
+            duration) + f"\n:heartbeat: Websocket Latency: {round(client.latency*1000)}ms",
         color=Color.green()
     ))
     
