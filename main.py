@@ -1,5 +1,5 @@
 import os
-import random
+from random import random
 from discord import Game, Embed, Color
 from discord.ext import commands, tasks
 from itertools import cycle
@@ -47,9 +47,8 @@ async def erand(ctx: commands.Context, *, args):
         for emoji in emojis: reply: str = reply.replace(emoji, emojis[emoji])
 
         reply = random.choices(reply.split(' '))
-        await ctx.send(reply)
         # Sending reply
-        await ctx.message.delete() # deleting original message
+        #await ctx.message.delete() # deleting original message
         if reply in emojis: # if it's a single emoji a arg, set emoji to embed image
             await ctx.send(embed=Embed(
                 color=Color.from_hsv(random(), 1, 1)
