@@ -44,6 +44,14 @@ async def erand(ctx: commands.Context, *, args):
 
     args = random.choice(reply.split(' '))
 
+    await ctx.send(embed=Embed(
+        description='',args,
+        color=Color.from_hsv(random(), 1, 1)
+    ).set_author(
+        name=f'{ctx.me}',
+        icon_url=f'https://cdn.discordapp.com/avatars/{ctx.me.id}/{ctx.me.avatar}.png'
+    ))
+
     # Sending reply
     await ctx.message.delete() # deleting original message
     if len(args.split()) == 1 and args in emojis: # if it's a single emoji a arg, set emoji to embed image
