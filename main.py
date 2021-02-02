@@ -12,6 +12,9 @@ client_status = cycle(["working overtime", "listening to music subjectively good
 async def on_ready():
     print("i'm online yey")
     change_status.start()
+@client.event
+async def on_command_error(ctx, error):
+    await ctx.send(error)
 
 @tasks.loop(minutes=2)
 async def change_status():
@@ -44,7 +47,7 @@ async def erand(ctx: commands.Context, *, args):
         for emoji in emojis: reply: str = reply.replace(emoji, emojis[emoji])
 
         reply = random.choice(reply.split(' '))
-
+        await ctx.send(reply)
         # Sending reply
         await ctx.message.delete() # deleting original message
         if reply in emojis: # if it's a single emoji a arg, set emoji to embed image
