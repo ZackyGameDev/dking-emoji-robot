@@ -45,7 +45,7 @@ async def erand(ctx: commands.Context, *, args):
     args = random.choice(reply.split(' '))
 
     await ctx.send(embed=Embed(
-        description='',args,
+        description='' + args,
         color=Color.from_hsv(random(), 1, 1)
     ).set_author(
         name=f'{ctx.me}',
