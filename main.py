@@ -4,7 +4,7 @@ from discord import Game, Embed, Color
 from discord.ext import commands, tasks
 from itertools import cycle
 
-client = commands.Bot(command_prefix="-")
+client = commands.Bot(command_prefix="-", case_insensitive=True)
 client.remove_command("help")
 client_status = cycle(["working overtime", "listening to music subjectively good in my opinion", "playing some videogames", "contemplating robot existance", "trying to be online", "listening to -ehelp", "Zacky is my developer", "Dking is Grinding"])
 
@@ -16,6 +16,22 @@ async def on_ready():
 async def on_command_error(ctx, error):
     await ctx.send(error)
 
+# Stole this command code from https://github.com/ZackyGameDev/event-hoster-discord-bot/blob/master/event-hoster.py#L177
+@client.command()
+async def eping(ctx):
+    start = time.perf_counter()
+    message = await ctx.send(embed=discord.Embed(
+        description="Calculating Ping...",
+        color=discord.Color.red()
+    ))
+    end = time.perf_counter()
+    duration = (end - start) * 1000
+    await message.edit(embed=discord.Embed(
+        title='Response Delay: {:.2f}ms'.format(
+            duration) + f"\nWebsocket Latency: {round(client.latency*1000)}ms",
+        color=discord.Color.green()
+    ))
+    
 @tasks.loop(minutes=2)
 async def change_status():
     await client.change_presence(activity=Game(next(client_status)))
