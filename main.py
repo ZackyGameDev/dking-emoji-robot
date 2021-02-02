@@ -1,3 +1,4 @@
+import time
 import os
 from random import *
 from discord import Game, Embed, Color
