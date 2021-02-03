@@ -14,7 +14,7 @@ help_message = """
 Use this command to use nitro emojis.
 e.g. `-e sundarDasta is og`
 
-`-erand <randomOptionsToSelectFrom>`:
+`-erand \'optional text\' <randomOptionsToSelectFrom>`:
 Use this command to let this bot choose from your arguments (emojis also supported)
 e.g. `-erand sundarDasta 69`
 
@@ -70,7 +70,11 @@ async def ehelp(ctx: commands.Context):
 async def erand(ctx: commands.Context, *, args):
     try: 
         reply: str = args
-
+        Question = ''
+        if reply.startswith('\''):
+            Question = reply.replace("\'",'',1).replace('\'',';',1)
+            Question2 = Question.split(';')
+            Question = Question2[0]
         emojis: dict = {}
         for i in ctx.guild.emojis:
             if i.animated: 
@@ -84,6 +88,7 @@ async def erand(ctx: commands.Context, *, args):
         #await ctx.message.delete() # deleting original message
         if reply in emojis: # if it's a single emoji a arg, set emoji to embed image
             await ctx.send(embed=Embed(
+                title=Question,
                 color=Color.from_hsv(random(), 1, 1)
             ).set_author(
                 name=f'{ctx.author}',
@@ -94,6 +99,7 @@ async def erand(ctx: commands.Context, *, args):
         else: # else send formated string as embed description
             await ctx.send(embed=Embed(
                 description=reply,
+                title=Question,
                 color=Color.from_hsv(random(), 1, 1)
             ).set_author(
                 name=f'{ctx.author}',
