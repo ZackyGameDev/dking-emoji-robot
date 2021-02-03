@@ -83,16 +83,26 @@ async def poll(ctx, question, *options: str):
     for x, option in enumerate(options):
         description += '\n {} {}'.format(reactions[x], option)
 
-    embed = ctx.Embed(title = question, color = 3553599, description = ''.join(description))
-
-    react_message = await ctx.send(embed = embed)
+    react_message = await ctx.send(embed=Embed(
+                title=question,
+                color=Color.from_hsv(random(), 1, 1),
+                description = ''.join(description)
+            ).set_author(
+                name=f'{ctx.author}',
+                icon_url=f'https://cdn.discordapp.com/avatars/{ctx.author.id}/{ctx.author.avatar}.png'
+            ))
 
     for reaction in reactions[:len(options)]:
         await ctx.add_reaction(react_message, reaction)
 
-    embed.set_footer(text='Poll ID: {}'.format(react_message.id))
-
-    await ctx.edit_message(react_message, embed=embed)
+    await react_message.edit(embed=Embed(
+                title=question,
+                color=Color.from_hsv(random(), 1, 1),
+                description = ''.join(description)
+            ).set_author(
+                name=f'{ctx.author}',
+                icon_url=f'https://cdn.discordapp.com/avatars/{ctx.author.id}/{ctx.author.avatar}.png'
+            ))
 
 #another code by Dking
 @client.command() 
@@ -114,7 +124,7 @@ async def erand(ctx: commands.Context, *, args):
 
         for emoji in emojis: reply: str = reply.split(' ')[randint(0, len(reply.split(' '))-1)].replace(emoji, emojis[emoji])
         #await ctx.message.delete() # deleting original message
-        if reply in ctx.guild.emojis: # if it's a single emoji a arg, set emoji to embed image
+        if args in emojis: # if it's a single emoji a arg, set emoji to embed image
             await ctx.send('yes sir')
             await ctx.send(embed=Embed(
                 title=Question,
