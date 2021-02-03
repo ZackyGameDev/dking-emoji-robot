@@ -75,7 +75,7 @@ async def erand(ctx: commands.Context, *, args):
             Question = reply.replace("\'",'',1).replace('\'',';',1)
             Question2 = Question.split(';')
             Question = Question2[0]
-        reply = reply.replace('\'' + Question + '\'', '')
+        reply = reply.replace('\'' + Question + '\'', '').strip()
         emojis: dict = {}
         for i in ctx.guild.emojis:
             if i.animated: 
