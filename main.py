@@ -65,6 +65,38 @@ async def ehelp(ctx: commands.Context):
         icon_url=f'https://cdn.discordapp.com/avatars/{ctx.me.id}/{ctx.me.avatar}.png'
     ))
 
+@commands.command(pass_context = True)
+async def poll(self, ctx, question, *options: str):
+    author = ctx.message.author
+    server = ctx.message.server
+
+    if len(options) <= 1:
+        await self.bot.say("```Error! A poll must have more than one option.```")
+        return
+    if len(options) > 2:
+        await self.bot.say("```Error! Poll can have no more than two options.```")
+        return
+
+    if len(options) == 2 and options[0] == "yes" and options[1] == "no":
+        reactions = ['👍', '👎']
+    else:
+        reactions = ['👍', '👎']
+
+    description = []
+    for x, option in enumerate(options):
+        description += '\n {} {}'.format(reactions[x], option)
+
+    embed = ctx.Embed(title = question, color = 3553599, description = ''.join(description))
+
+    react_message = await self.bot.say(embed = embed)
+
+    for reaction in reactions[:len(options)]:
+        await self.bot.add_reaction(react_message, reaction)
+
+    embed.set_footer(text='Poll ID: {}'.format(react_message.id))
+
+    await self.bot.edit_message(react_message, embed=embed)
+
 #another code by Dking
 @client.command() 
 async def erand(ctx: commands.Context, *, args):
