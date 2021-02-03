@@ -65,7 +65,7 @@ async def ehelp(ctx: commands.Context):
         icon_url=f'https://cdn.discordapp.com/avatars/{ctx.me.id}/{ctx.me.avatar}.png'
     ))
 
-@commands.command(pass_context = True)
+@client.command()
 async def poll(self, ctx, question, *options: str):
     author = ctx.message.author
     server = ctx.message.server
