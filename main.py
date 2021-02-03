@@ -67,9 +67,6 @@ async def ehelp(ctx: commands.Context):
 
 @client.command()
 async def poll(ctx, question, *options: str):
-    author = ctx.message.author
-    server = ctx.message.server
-
     if len(options) <= 1:
         await ctx.send("```Error! A poll must have more than one option.```")
         return
