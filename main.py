@@ -93,7 +93,7 @@ async def poll(ctx, question, *options: str):
             ))
 
     for reaction in reactions[:len(options)]:
-        await ctx.add_reaction(react_message, reaction)
+        await react_message.add_reaction(react_message, reaction)
 
     await react_message.edit(embed=Embed(
                 title=question,
