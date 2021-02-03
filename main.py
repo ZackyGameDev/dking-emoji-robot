@@ -66,15 +66,15 @@ async def ehelp(ctx: commands.Context):
     ))
 
 @client.command()
-async def poll(self, ctx, question, *options: str):
+async def poll(ctx, question, *options: str):
     author = ctx.message.author
     server = ctx.message.server
 
     if len(options) <= 1:
-        await self.bot.say("```Error! A poll must have more than one option.```")
+        await ctx.send("```Error! A poll must have more than one option.```")
         return
     if len(options) > 2:
-        await self.bot.say("```Error! Poll can have no more than two options.```")
+        await ctx.send("```Error! Poll can have no more than two options.```")
         return
 
     if len(options) == 2 and options[0] == "yes" and options[1] == "no":
@@ -88,14 +88,14 @@ async def poll(self, ctx, question, *options: str):
 
     embed = ctx.Embed(title = question, color = 3553599, description = ''.join(description))
 
-    react_message = await self.bot.say(embed = embed)
+    react_message = await ctx.send(embed = embed)
 
     for reaction in reactions[:len(options)]:
-        await self.bot.add_reaction(react_message, reaction)
+        await ctx.add_reaction(react_message, reaction)
 
     embed.set_footer(text='Poll ID: {}'.format(react_message.id))
 
-    await self.bot.edit_message(react_message, embed=embed)
+    await ctx.edit_message(react_message, embed=embed)
 
 #another code by Dking
 @client.command() 
@@ -117,7 +117,7 @@ async def erand(ctx: commands.Context, *, args):
 
         for emoji in emojis: reply: str = reply.split(' ')[randint(0, len(reply.split(' '))-1)].replace(emoji, emojis[emoji])
         #await ctx.message.delete() # deleting original message
-        if reply in emojis: # if it's a single emoji a arg, set emoji to embed image
+        if reply in ctx.guild.emojis: # if it's a single emoji a arg, set emoji to embed image
             await ctx.send('yes sir')
             await ctx.send(embed=Embed(
                 title=Question,
