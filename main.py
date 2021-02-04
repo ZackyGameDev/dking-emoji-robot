@@ -4,6 +4,7 @@ import discord
 from random import *
 from discord.ext import commands, tasks
 from itertools import cycle
+from utils.functions import read_file
 
 client = commands.Bot(command_prefix="-", case_insensitive=True)
 client_status = cycle(["working overtime", "listening to music subjectively good in my opinion", "playing some videogames", "contemplating robot existance", "trying to be online", "listening to -ehelp", "Zacky is my developer", "Dking is Grinding"])
@@ -55,4 +56,10 @@ async def eping(ctx):
 async def on_command_error(ctx, error):
     await ctx.send(error)
 
-client.run(os.getenv("TOKEN"))
+if os.getenv("TOKEN") != None:
+    client.run(os.getenv("TOKEN"))
+else:
+    try:
+        client.run(read_file("token.txt"))
+    except:
+        print("Please create a valid file with bot's token in it!, or create an env var named TOKEN with bot token!")
