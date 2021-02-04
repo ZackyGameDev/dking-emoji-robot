@@ -9,7 +9,7 @@ class PollCommands(commands.Cog):
         self.client: commands.Bot = client
         self.client.remove_command("help")
 
-    @client.command()
+    @commands.command()
     async def poll(self, ctx, question, *options: str):
         if len(options) <= 1:
             await ctx.send("```Error! A poll must have more than one option.```")
@@ -21,7 +21,7 @@ class PollCommands(commands.Cog):
         if len(options) == 2 and options[0] == "yes" and options[1] == "no":
             reactions = ['👍', '👎']
         else:
-            reactions = ['👍', '👎']
+            reactions = [':'+str(options[0])+':', ':'+str(options[1])+':']
 
         description = []
         for x, option in enumerate(options):
@@ -37,7 +37,7 @@ class PollCommands(commands.Cog):
         ))
 
         for reaction in reactions[:len(options)]:
-            await react_message.add_reaction(react_message, reaction)
+            await react_message.add_reaction(reaction)
 
         await react_message.edit(embed=discord.Embed(
             title=question,
