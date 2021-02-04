@@ -57,7 +57,7 @@ class PollCommands(commands.Cog):
         botsInServer = list(filter(filterOnlyBots, membersInServer))
         botsInServerCount = len(botsInServer)
         usersInServerCount = ctx.guild.member_count - botsInServerCount
-        reaction, user = await commands.wait_for('reaction_add', check=check_count_reaction(int(usersInServerCount/2), react_message))
+        reaction, user = await client.wait_for('reaction_add', check=check_count_reaction(int(usersInServerCount/2), react_message))
         await ctx.send("Majority has voted!")
 
 def filterOnlyBots(member):
