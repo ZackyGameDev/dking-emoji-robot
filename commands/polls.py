@@ -15,7 +15,7 @@ class PollCommands(commands.Cog):
         return predicate   
 
     @commands.command()
-    async def poll(self, ctx, question, Description, *options: str):
+    async def poll(self, ctx, question, Description='', *options: str):
         if len(options) <= 1:
             await ctx.send("```Error! A poll must have more than one option.```")
             return
@@ -24,14 +24,12 @@ class PollCommands(commands.Cog):
             return
         if len(options) == 2 and options[0] == "yes" and options[1] == "no":
             reactions = ['👍', '👎']
-        elif options[0] in ctx.get(ctx.message.server.emojis, name=str(options[0])) and options[1] in ctx.get(ctx.message.server.emojis, name=str(options[1])):
-                reactions = [ctx.get(ctx.message.server.emojis, name=str(options[0])), ctx.get(ctx.message.server.emojis, name=str(options[1]))]
         else:
             reactions = ['👍', '👎']
 
         description = []
         for x, option in enumerate(options):
-            description += Description
+            description = Description
 
         react_message = await ctx.send(embed=discord.Embed(
             title=question,
@@ -57,7 +55,8 @@ class PollCommands(commands.Cog):
         botsInServer = list(filter(filterOnlyBots, membersInServer))
         botsInServerCount = len(botsInServer)
         usersInServerCount = ctx.guild.member_count - botsInServerCount
-        reaction, user = await commands.Bot.wait_for('reaction_add', check=self.check_count_reaction(int(usersInServerCount/2), react_message))
+        await commands.Bot.wait_for('reaction_add', 
+                                       check=self.check_count_reaction(int(usersInServerCount/2), react_message))
         await ctx.send("Majority has voted!")
 
 def filterOnlyBots(member):
