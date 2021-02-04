@@ -62,10 +62,8 @@ class PollCommands(commands.Cog):
             name=f'{ctx.me}',
             icon_url=f'https://cdn.discordapp.com/avatars/{ctx.me.id}/{ctx.me.avatar}.png'
         ))
-        counts = {react.emoji: react.count for react in react_message.reactions}
-        winner = max(choices, key=counts.get)
         await ctx.send(embed=discord.Embed(
-            description="{} is the winner".format(choices[winner]),
+            description=react_message.reactions,
             color=discord.Colour.from_hsv(random(), 1, 1),
         ).set_author(
             name=f'{ctx.me}',
