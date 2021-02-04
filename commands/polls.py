@@ -14,6 +14,7 @@ class PollCommands(commands.Cog):
             return reaction.message == message and reaction.count>=desired_count
         return predicate   
 
+    @commands.Cog.listener()
     @commands.command()
     async def poll(self, ctx, question, Description='', *options: str):
         if len(options) <= 1:
