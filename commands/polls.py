@@ -28,8 +28,9 @@ class PollCommands(commands.Cog):
             reactions = ['👍', '👎']
 
         description = []
+        description = Description
         for x, option in enumerate(options):
-            description = Description
+            description += '\n {} {}'.format(reactions[x], option)
 
         react_message = await ctx.send(embed=discord.Embed(
             title=question,
@@ -52,9 +53,13 @@ class PollCommands(commands.Cog):
             icon_url=f'https://cdn.discordapp.com/avatars/{ctx.author.id}/{ctx.author.avatar}.png'
         ))
         await commands.Bot.wait_for(self.client, 'reaction_add', 
-                                       check=self.check_count_reaction(int(3), react_message))
+                                       check=self.check_count_reaction(int(1), react_message))
+        reaction = ctx.get(react_message.reactions, emoji='👍')
+        if reaction.count >= 1: D = 'Vote is in favour'
+        else: D = "Vote is in against the favour"
         await ctx.send(embed=discord.Embed(
             title="Majority has voted!",
+            description=D,
             color=discord.Colour.from_hsv(random(), 1, 1),
         ).set_author(
             name=f'{ctx.me}',
