@@ -8,6 +8,24 @@ from itertools import cycle
 client = commands.Bot(command_prefix="-", case_insensitive=True)
 client_status = cycle(["working overtime", "listening to music subjectively good in my opinion", "playing some videogames", "contemplating robot existance", "trying to be online", "listening to -ehelp", "Zacky is my developer", "Dking is Grinding"])
 
+def boot() -> None:
+    # getting list of all paths to extensions
+    filelist = []
+    for root, dirs, files in os.walk("commands/"):
+        for file in files:
+            filelist.append(os.path.join(root, file))
+
+    # And then loading them
+    for file in filelist:
+        if file.endswith('.py'):
+            file = file.replace('/', '.').replace('\\', '.')[:-3]
+            try: 
+                client.load_extension(file)
+            except: 
+                pass
+
+boot()
+
 @client.event
 async def on_ready():
     print("i'm online yey")
