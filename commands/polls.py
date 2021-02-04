@@ -30,7 +30,7 @@ class PollCommands(commands.Cog):
         description = []
         description = Description
         for x, option in enumerate(options):
-            description += '\n {} {}\n'.format(reactions[x], option)
+            description += '\n {} {}'.format(reactions[x], option)
 
         react_message = await ctx.send(embed=discord.Embed(
             title=question,
@@ -54,7 +54,7 @@ class PollCommands(commands.Cog):
         ))
         await commands.Bot.wait_for(self.client, 'reaction_add', 
                                        check=self.check_count_reaction(int(1), react_message))
-        reaction = ctx.get(react_message.reactions, emoji='👍')
+        reaction = get(react_message.reactions, emoji='👍')
         if reaction.count >= 1: D = 'Vote is in favour'
         else: D = "Vote is in against the favour"
         await ctx.send(embed=discord.Embed(
