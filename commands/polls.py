@@ -15,7 +15,6 @@ class PollCommands(commands.Cog):
         return predicate   
 
     @commands.Cog.listener()
-    @commands.command()
     async def poll(self, ctx, question, Description='', *options: str):
         if len(options) <= 1:
             await ctx.send("```Error! A poll must have more than one option.```")
