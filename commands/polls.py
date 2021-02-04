@@ -53,7 +53,7 @@ class PollCommands(commands.Cog):
             icon_url=f'https://cdn.discordapp.com/avatars/{ctx.author.id}/{ctx.author.avatar}.png'
         ))
         await commands.Bot.wait_for(self.client, 'reaction_add', 
-                                       check=self.check_count_reaction(int(3), react_message))
+                                       check=self.check_count_reaction(int(1), react_message))
         reaction = ctx.get(react_message.reactions, emoji='👍')
         if reaction.count >= 1: D = 'Vote is in favour'
         else: D = "Vote is in against the favour"
