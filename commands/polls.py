@@ -53,14 +53,12 @@ class PollCommands(commands.Cog):
             name=f'{ctx.author}',
             icon_url=f'https://cdn.discordapp.com/avatars/{ctx.author.id}/{ctx.author.avatar}.png'
         ))
-        usersInServerCount = 0
-        if ctx.content.startswith('<count'):    
-            membersInServer = ctx.guild.members
-            botsInServer = list(filter(filterOnlyBots, membersInServer))
-
-            botsInServerCount = len(botsInServer)
-            usersInServerCount = ctx.guild.member_count - botsInServerCount
-        reaction, user = await ctx.wait_for('reaction_add', check=check_count_reaction(usersInServerCount, react_message))
+        membersInServer = ctx.guild.members
+        botsInServer = list(filter(filterOnlyBots, membersInServer))
+        botsInServerCount = len(botsInServer)
+        usersInServerCount = ctx.guild.member_count - botsInServerCount
+        reaction, user = await ctx.wait_for('reaction_add', check=check_count_reaction(int(usersInServerCount/2), react_message))
+        await ctx.send("Majority has voted!")
 
 def filterOnlyBots(member):
     return member.bot
