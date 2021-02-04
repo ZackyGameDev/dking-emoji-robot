@@ -30,7 +30,7 @@ class PollCommands(commands.Cog):
         description = []
         description = Description
         for x, option in enumerate(options):
-            description += '\n {} {}'.format(reactions[x], option)
+            description += '\n {} {}\n'.format(reactions[x], option)
 
         react_message = await ctx.send(embed=discord.Embed(
             title=question,
