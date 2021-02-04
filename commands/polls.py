@@ -3,6 +3,7 @@
 import discord
 from random import *
 from discord.ext import commands
+from discord.utils import get
 
 class PollCommands(commands.Cog):
     def __init__(self, client: commands.Bot):
