@@ -21,11 +21,11 @@ class PollCommands(commands.Cog):
         if len(options) == 2 and options[0] == "yes" and options[1] == "no":
             reactions = ['👍', '👎']
         else:
-            reactions = [':'+str(options[0])+':', ':'+str(options[1])+':']
+            reactions = [':white_check_mark:', ':negative_squared_cross_mark:']
 
         description = []
         for x, option in enumerate(options):
-            description += '\n {} {}'.format(reactions[x], option)
+            description += '\n {}\n{}'.format(reactions[x], option)
 
         react_message = await ctx.send(embed=discord.Embed(
             title=question,
