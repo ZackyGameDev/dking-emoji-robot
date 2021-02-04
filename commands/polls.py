@@ -14,7 +14,7 @@ class PollCommands(commands.Cog):
             return reaction.message == message and reaction.count>=desired_count
         return predicate   
 
-    @commands.Cog.listener()
+    @commands.command()
     async def poll(self, ctx, question, Description='', *options: str):
         if len(options) <= 1:
             await ctx.send("```Error! A poll must have more than one option.```")
@@ -55,7 +55,7 @@ class PollCommands(commands.Cog):
         botsInServer = list(filter(filterOnlyBots, membersInServer))
         botsInServerCount = len(botsInServer)
         usersInServerCount = ctx.guild.member_count - botsInServerCount
-        await commands.Bot.wait_for('reaction_add', 
+        await commands.Bot.wait_for(ctx, 'reaction_add', 
                                        check=self.check_count_reaction(int(usersInServerCount/2), react_message))
         await ctx.send("Majority has voted!")
 
