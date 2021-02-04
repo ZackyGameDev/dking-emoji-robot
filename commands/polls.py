@@ -20,12 +20,14 @@ class PollCommands(commands.Cog):
 
         if len(options) == 2 and options[0] == "yes" and options[1] == "no":
             reactions = ['👍', '👎']
+        elif options[0] in ctx.guild.emojis:
+                reactions = [ctx.get(ctx.message.server.emojis, name=str(options[0])), ctx.get(ctx.message.server.emojis, name=str(options[1]))]
         else:
-            reactions = [':white_check_mark:', ':negative_squared_cross_mark:']
+            reactions = ['👍', '👎']
 
         description = []
         for x, option in enumerate(options):
-            description += '\n {}\n{}'.format(reactions[x], option)
+            description += '\n {} {}\n'.format(reactions[x], option)
 
         react_message = await ctx.send(embed=discord.Embed(
             title=question,
@@ -47,6 +49,8 @@ class PollCommands(commands.Cog):
             name=f'{ctx.author}',
             icon_url=f'https://cdn.discordapp.com/avatars/{ctx.author.id}/{ctx.author.avatar}.png'
         ))
+        reaction = await ctx.wait_for_reaction([], react_message)
+        await ctx.send("You responded with {}".format(reaction.emoji))
 
 def setup(client):
     client.add_cog(PollCommands(client))
