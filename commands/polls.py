@@ -65,7 +65,7 @@ class PollCommands(commands.Cog):
         await tally(self, ctx, react_message.id)
 
 async def tally(self, ctx, id):
-        poll_message = await self.bot.get_message(ctx.message.channel, id)
+        poll_message = await ctx.fetch_message(id)
         if not poll_message.embeds:
             return
         embed = poll_message.embeds[0]
