@@ -69,10 +69,6 @@ async def tally(self, ctx, id):
         if not poll_message.embeds:
             return
         embed = poll_message.embeds[0]
-        if poll_message.author != ctx.message.server.me:
-            return
-        if not embed['footer']['text'].startswith('Poll ID:'):
-            return
         unformatted_options = [x.strip() for x in embed['description'].split('\n')]
         opt_dict = {x[:2]: x[3:] for x in unformatted_options} if unformatted_options[0][0] == '1' \
             else {x[:1]: x[2:] for x in unformatted_options}
