@@ -1,3 +1,7 @@
+# -*- coding: UTF-8 -*-
+
+# some cool utility functions i wrote
+
 import time
 import colorama
 import discord
