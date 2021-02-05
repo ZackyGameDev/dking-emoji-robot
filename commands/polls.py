@@ -16,6 +16,7 @@ class PollCommands(commands.Cog):
         return predicate   
 
     @commands.command()
+    @commands.has_role('Owner')
     async def poll(self, ctx, question, Description='', *options: str):
         if len(options) <= 1:
             await ctx.send("```Error! A poll must have more than one option.```")
@@ -25,6 +26,10 @@ class PollCommands(commands.Cog):
             return
         if len(options) == 2 and options[0] == "yes" and options[1] == "no":
             reactions = ['👍', '👎']
+        elif options[0] in ctx.get_all_emojis() and options[1] in ctx.get_all_emojis():
+            emoji = get(ctx.get_all_emojis(), name=options[0])
+            emoji1 = get(ctx.get_all_emojis(), name=options[1])
+            reactions = [emoji , emoji1]
         else:
             reactions = ['👍', '👎']
 
