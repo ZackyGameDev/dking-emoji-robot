@@ -54,7 +54,7 @@ class PollCommands(commands.Cog):
             icon_url=f'https://cdn.discordapp.com/avatars/{ctx.author.id}/{ctx.author.avatar}.png'
         ))
         await commands.Bot.wait_for(self.client, 'reaction_add', 
-                                       check=self.check_count_reaction(int(1), react_message))
+                                       check=self.check_count_reaction(int(3), react_message))
         await ctx.send(embed=discord.Embed(
             title="Majority has voted!",
             color=discord.Colour.from_hsv(random(), 1, 1),
@@ -64,13 +64,14 @@ class PollCommands(commands.Cog):
         ))
         msg = await ctx.fetch_message(react_message.id)
         Reacts = str(msg.reactions).split(',')
-        await ctx.send(Reacts[0].split('True count=')[1].replace('>','').replace(']',''))
         results = "Votes in favour are: **{}**".format(Reacts[0].split('True count=')[1].replace('>','').replace(']',''))
         results = results + "\nVotes in not favour are: **{}**".format(Reacts[1].split('True count=')[1].replace('>','').replace(']',''))
-        if int(Reacts[0].split('True count=')[1].replace('>','').replace(']','')) > int(Reacts[1].split('True count=')[1].replace('>','').replace(']','')): winner = "**In Favour**"
-        else: winner = "**Not in Favour**"
+        #NICE
+        if int(Reacts[0].split('True count=')[1].replace('>','').replace(']','')) > int(Reacts[1].split('True count=')[1].replace('>','').replace(']','')): winner = "In Favour"
+        else: winner = "Not in Favour"
         await ctx.send(embed=discord.Embed(
-            description= results + '\n' + winner,
+            description= results,
+            title=winner,
             color=discord.Colour.from_hsv(random(), 1, 1),
         ).set_author(
             name=f'{ctx.me}',
