@@ -63,8 +63,13 @@ class PollCommands(commands.Cog):
             icon_url=f'https://cdn.discordapp.com/avatars/{ctx.me.id}/{ctx.me.avatar}.png'
         ))
         msg = await ctx.fetch_message(react_message.id)
+        Reacts = str(msg.reactions).split(',')
+        results = "Votes in favour are: **{}**".format(Reacts[0].split('True count=')[1])
+        results = results + "\nVotes in not favour are: **{}**".format(Reacts[1].split('True count=')[1])
+        if int(Reacts[0].split('True count=')[1]) > int(Reacts[1].split('True count=')[1]): winner = "**In Favour**"
+        else: winner = "**Not in Favour**"
         await ctx.send(embed=discord.Embed(
-            description=str(msg.reactions),
+            description= results + '\n' + winner,
             color=discord.Colour.from_hsv(random(), 1, 1),
         ).set_author(
             name=f'{ctx.me}',
