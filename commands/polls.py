@@ -24,19 +24,18 @@ class PollCommands(commands.Cog):
         if len(options) > 2:
             await ctx.send("```Error! Poll can have no more than two options.```")
             return
+        emojis: dict = {}
         for i in ctx.guild.emojis:
             if i.animated: 
                 emojis[f"{i.name}"]: str = f"<a:{i.name}:{i.id}>"
             else: 
                 emojis[f"{i.name}"]: str = f"<:{i.name}:{i.id}>"
         emote = Emotes.split(' ')
-        # Creating reply
-        emojis: dict = {}
         for emoji in emojis: 
-            options[0]: str = emote[0].replace(emoji, emojis[emoji])
-            options[1]: str = emote[1].replace(emoji, emojis[emoji])
+            emote[0]: str = emote[0].replace(emoji, emojis[emoji])
+            emote[1]: str = emote[1].replace(emoji, emojis[emoji])
         if emote[0] in emojis and emote[1] in emojis:
-            reactions = [options[0] , options[1]]
+            reactions = [emote[0] , emote[1]]
         else:
             reactions = ['👍', '👎']
 
