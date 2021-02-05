@@ -27,8 +27,8 @@ class PollCommands(commands.Cog):
         if len(options) == 2 and options[0] == "yes" and options[1] == "no":
             reactions = ['👍', '👎']
         elif options[0] in ctx.get_all_emojis() and options[1] in ctx.get_all_emojis():
-            emoji = get(ctx.get_all_emojis(), name=options[0])
-            emoji1 = get(ctx.get_all_emojis(), name=options[1])
+            emoji = get(self.client.get_all_emojis(), name=options[0])
+            emoji1 = get(self.client.get_all_emojis(), name=options[1])
             reactions = [emoji , emoji1]
         else:
             reactions = ['👍', '👎']
