@@ -17,19 +17,26 @@ class PollCommands(commands.Cog):
 
     @commands.command()
     @commands.has_role('Owner')
-    async def poll(self, ctx, question, Description='', *options: str):
+    async def poll(self, ctx, question, Description='', Emotes='', *options: str):
         if len(options) <= 1:
             await ctx.send("```Error! A poll must have more than one option.```")
             return
         if len(options) > 2:
             await ctx.send("```Error! Poll can have no more than two options.```")
             return
-        if len(options) == 2 and options[0] == "yes" and options[1] == "no":
-            reactions = ['👍', '👎']
-        elif options[0] in ctx.get_all_emojis() and options[1] in ctx.get_all_emojis():
-            emoji = get(self.client.get_all_emojis(), name=options[0])
-            emoji1 = get(self.client.get_all_emojis(), name=options[1])
-            reactions = [emoji , emoji1]
+        for i in ctx.guild.emojis:
+            if i.animated: 
+                emojis[f"{i.name}"]: str = f"<a:{i.name}:{i.id}>"
+            else: 
+                emojis[f"{i.name}"]: str = f"<:{i.name}:{i.id}>"
+        emote = Emotes.split(' ')
+        # Creating reply
+        emojis: dict = {}
+        for emoji in emojis: 
+            options[0]: str = emote[0].replace(emoji, emojis[emoji])
+            options[1]: str = emote[1].replace(emoji, emojis[emoji])
+        if emote[0] in emojis and emote[1] in emojis:
+            reactions = [options[0] , options[1]]
         else:
             reactions = ['👍', '👎']
 
