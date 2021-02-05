@@ -64,9 +64,10 @@ class PollCommands(commands.Cog):
         ))
         msg = await ctx.fetch_message(react_message.id)
         Reacts = str(msg.reactions).split(',')
-        results = "Votes in favour are: **{}**".format(Reacts[0].split('True count=')[1].replace('>',''))
-        results = results + "\nVotes in not favour are: **{}**".format(Reacts[1].split('True count=')[1].replace('>',''))
-        if int(Reacts[0].split('True count=')[1].replace('>','')) > int(Reacts[1].split('True count=')[1].replace('>','')): winner = "**In Favour**"
+        await ctx.send(Reacts[0].split('True count=')[1].replace('>','').replace(']',''))
+        results = "Votes in favour are: **{}**".format(Reacts[0].split('True count=')[1].replace('>','').replace(']',''))
+        results = results + "\nVotes in not favour are: **{}**".format(Reacts[1].split('True count=')[1].replace('>','').replace(']',''))
+        if int(Reacts[0].split('True count=')[1].replace('>','').replace(']','')) > int(Reacts[1].split('True count=')[1].replace('>','').replace(']','')): winner = "**In Favour**"
         else: winner = "**Not in Favour**"
         await ctx.send(embed=discord.Embed(
             description= results + '\n' + winner,
