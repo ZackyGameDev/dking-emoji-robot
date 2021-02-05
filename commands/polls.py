@@ -63,6 +63,7 @@ class PollCommands(commands.Cog):
             icon_url=f'https://cdn.discordapp.com/avatars/{ctx.me.id}/{ctx.me.avatar}.png'
         ))
         msg = await ctx.fetch_message(react_message.id)
+        ctx.send(msg.reactions)
         await ctx.send(embed=discord.Embed(
             description=(msg.reactions),
             color=discord.Colour.from_hsv(random(), 1, 1),
