@@ -55,16 +55,10 @@ async def eping(ctx):
         color=discord.Colour.green()
     ))
 
-<<<<<<< HEAD
-# @client.event
-# async def on_command_error(ctx, error):
-#     await ctx.send(error)
-=======
 @client.event
 async def on_command_error(ctx, error):
     await ctx.send(error)
     console_log(f"Error: {error}", "white", "on_red")
->>>>>>> e3b5e5ff89e8987198273724e2ac0ff48fdbef16
 
 if os.getenv("TOKEN") != None:
     client.run(os.getenv("TOKEN"))
