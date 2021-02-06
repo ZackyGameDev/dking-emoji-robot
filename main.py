@@ -4,7 +4,7 @@ import discord
 from random import *
 from discord.ext import commands, tasks
 from itertools import cycle
-from utils.functions import read_file
+from utils.functions import read_file, console_log
 
 client = commands.Bot(command_prefix="-", case_insensitive=True)
 client_status = cycle(["working overtime", "listening to music subjectively good in my opinion", "playing some videogames", "contemplating robot existance", "trying to be online", "listening to -ehelp", "Zacky is my developer", "Dking is Grinding"])
@@ -29,7 +29,7 @@ boot()
 
 @client.event
 async def on_ready():
-    print("i'm online yey")
+    console_log("Bot has botted. Ready.", "green")
     change_status.start()
     
 @tasks.loop(minutes=2)
@@ -39,6 +39,9 @@ async def change_status():
 # Stole this command code from https://github.com/ZackyGameDev/event-hoster-discord-bot/blob/master/event-hoster.py#L177
 @client.command()
 async def eping(ctx):
+    '''`-ePing`:
+    See the latency of this robot'''
+    console_log(f"{ctx.author} Checked my ping.")
     start = time.perf_counter()
     message = await ctx.send(embed=discord.Embed(
         description="Calculating Ping...",
@@ -52,9 +55,16 @@ async def eping(ctx):
         color=discord.Colour.green()
     ))
 
+<<<<<<< HEAD
 # @client.event
 # async def on_command_error(ctx, error):
 #     await ctx.send(error)
+=======
+@client.event
+async def on_command_error(ctx, error):
+    await ctx.send(error)
+    console_log(f"Error: {error}", "white", "on_red")
+>>>>>>> e3b5e5ff89e8987198273724e2ac0ff48fdbef16
 
 if os.getenv("TOKEN") != None:
     client.run(os.getenv("TOKEN"))
