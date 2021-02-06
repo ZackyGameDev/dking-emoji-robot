@@ -9,7 +9,7 @@ class PollCommands(commands.Cog):
         self.client: commands.Bot = client
         self.client.remove_command("help")
 
-    @client.command()
+    @commands.command()
     async def poll(self, ctx, question, *options: str):
         if len(options) <= 1:
             await ctx.send("```Error! A poll must have more than one option.```")
