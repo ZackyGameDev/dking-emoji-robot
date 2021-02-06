@@ -24,26 +24,18 @@ class PollCommands(commands.Cog):
         if len(options) > 2:
             await ctx.send("```Error! Poll can have no more than two options.```")
             return
-        emojis: dict = {}
-        for i in ctx.guild.emojis:
-            if i.animated: 
-                emojis[f"{i.name}"]: str = f"<a:{i.name}:{i.id}>"
-            else: 
-                emojis[f"{i.name}"]: str = f"<:{i.name}:{i.id}>"
         emote = Emotes.split(' ')
-        for emoji in emojis: 
-            emote[0]: str = emote[0].replace(emoji, emojis[emoji])
-            emote[1]: str = emote[1].replace(emoji, emojis[emoji])
-        if emote[0] in emojis and emote[1] in emojis:
-            reactions = [emote[0] , emote[1]]
+        if emote[0] in str(ctx.guild.emojis) and emote[1] in str(ctx.guild.emojis):
+            reactions = [get(ctx.guild.emojis, name=emote[0]) , get(ctx.guild.emojis, name=emote[1])]
         else:
             reactions = ['👍', '👎']
 
         description = []
         description = Description
         for x, option in enumerate(options):
-            description += '\n {} {}'.format(reactions[x], option)
+            description += '\n{} {}'.format(reactions[x], option)
 
+        await ctx.message.delete()
         react_message = await ctx.send(embed=discord.Embed(
             title=question,
             color=discord.Colour.from_hsv(random(), 1, 1),
@@ -56,16 +48,8 @@ class PollCommands(commands.Cog):
         for reaction in reactions[:len(options)]:
             await react_message.add_reaction(reaction)
 
-        await react_message.edit(embed=discord.Embed(
-            title=question,
-            color=discord.Colour.from_hsv(random(), 1, 1),
-            description = ''.join(description)
-        ).set_author(
-            name=f'{ctx.author}',
-            icon_url=f'https://cdn.discordapp.com/avatars/{ctx.author.id}/{ctx.author.avatar}.png'
-        ))
         await commands.Bot.wait_for(self.client, 'reaction_add', 
-                                       check=self.check_count_reaction(int(3), react_message))
+                                       check=self.check_count_reaction(int(4), react_message))
         await ctx.send(embed=discord.Embed(
             title="Majority has voted!",
             color=discord.Colour.from_hsv(random(), 1, 1),
@@ -75,11 +59,18 @@ class PollCommands(commands.Cog):
         ))
         msg = await ctx.fetch_message(react_message.id)
         Reacts = str(msg.reactions).split(',')
+
         results = "Votes in favour are: **{}**".format(Reacts[0].split('True count=')[1].replace('>','').replace(']',''))
         results = results + "\nVotes in not favour are: **{}**".format(Reacts[1].split('True count=')[1].replace('>','').replace(']',''))
-        #NICE
         if int(Reacts[0].split('True count=')[1].replace('>','').replace(']','')) > int(Reacts[1].split('True count=')[1].replace('>','').replace(']','')): winner = "In Favour"
         else: winner = "Not in Favour"
+
+        users = set()
+        #NICE
+        for reaction in msg.reactions:
+            async for user in reaction.users():
+                users.add(user)
+        results += f"\n\nUser Voted: {', '.join(user.name for user in users)}"
         await ctx.send(embed=discord.Embed(
             description= results,
             title=winner,
