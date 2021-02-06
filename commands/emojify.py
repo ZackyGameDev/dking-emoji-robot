@@ -11,6 +11,9 @@ class EmojifyCommand(commands.Cog):
 
     @commands.command(aliases=["e"])
     async def emojify(self, ctx: commands.Context, *, args):
+        '''`-e <text>`:
+        Use this command to use nitro emojis.
+        e.g. `-e sundarDasta is og`'''
         reply: str = args # Will format this later
 
         # Getting emojis
@@ -61,6 +64,10 @@ class EmojifyCommand(commands.Cog):
     #another code by Dking
     @commands.command() 
     async def erand(self, ctx: commands.Context, *, args):
+        '''
+        `-erand \'optional text\' <randomOptionsToSelectFrom>`:
+        Use this command to let this bot choose from your arguments (emojis also supported)
+        e.g. `-erand sundarDasta 69`'''
         try: 
             reply: str = args
             Question = ''

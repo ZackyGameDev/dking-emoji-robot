@@ -39,6 +39,8 @@ async def change_status():
 # Stole this command code from https://github.com/ZackyGameDev/event-hoster-discord-bot/blob/master/event-hoster.py#L177
 @client.command()
 async def eping(ctx):
+    '''`-ePing`:
+    See the latency of this robot'''
     start = time.perf_counter()
     message = await ctx.send(embed=discord.Embed(
         description="Calculating Ping...",
