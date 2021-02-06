@@ -7,7 +7,7 @@ from itertools import cycle
 from utils.functions import read_file, console_log
 
 client = commands.Bot(command_prefix="-", case_insensitive=True)
-client_status = cycle(["working overtime", "listening to music subjectively good in my opinion", "playing some videogames", "contemplating robot existance", "trying to be online", "listening to -ehelp", "Zacky is my developer", "Dking is Grinding"])
+client_status = cycle(["working overtime", "listening to music subjectively good in my opinion", "playing some videogames", "contemplating robot existance", "trying to be online", "listening to -ehelp", "Zacky and Dking are my developer", "Dking is Grinding"])
 
 def boot() -> None:
     # getting list of all paths to extensions

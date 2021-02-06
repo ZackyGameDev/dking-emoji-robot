@@ -66,9 +66,8 @@ class PollCommands(commands.Cog):
         results = results + "\nVotes in not favour are: **{}**".format(Reacts[1].split('True count=')[1].replace('>','').replace(']',''))
         if int(Reacts[0].split('True count=')[1].replace('>','').replace(']','')) > int(Reacts[1].split('True count=')[1].replace('>','').replace(']','')): winner = "In Favour"
         else: winner = "Not in Favour"
-
+#NICE
         users = set()
-        #NICE
         for reaction in msg.reactions:
             async for user in reaction.users():
                 users.add(user)
