@@ -3,6 +3,7 @@
 import discord
 from random import *
 from discord.ext import commands
+from utils.functions import console_log
 
 class EmojifyCommand(commands.Cog):
     def __init__(self, client: commands.Bot):
@@ -14,6 +15,8 @@ class EmojifyCommand(commands.Cog):
         '''`-e <text>`:
         Use this command to use nitro emojis.
         e.g. `-e sundarDasta is og`'''
+        console_log(f"{ctx.author} used my emojify command.")
+        
         reply: str = args # Will format this later
 
         # Getting emojis
@@ -68,6 +71,7 @@ class EmojifyCommand(commands.Cog):
         `-erand \'optional text\' <randomOptionsToSelectFrom>`:
         Use this command to let this bot choose from your arguments (emojis also supported)
         e.g. `-erand sundarDasta 69`'''
+        console_log(f"{ctx.author} used my -erand command.")
         try: 
             reply: str = args
             Question = ''

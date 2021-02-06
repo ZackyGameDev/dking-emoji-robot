@@ -4,6 +4,7 @@ import discord
 from random import *
 from discord.ext import commands
 from discord.utils import get
+from utils.functions import console_log
 
 class PollCommands(commands.Cog):
     def __init__(self, client: commands.Bot):
@@ -18,6 +19,7 @@ class PollCommands(commands.Cog):
     @commands.command()
     @commands.has_role('Owner')
     async def poll(self, ctx, question, Description='', Emotes='', *options: str):
+        console_log("New poll created.")
         if len(options) <= 1:
             await ctx.send("```Error! A poll must have more than one option.```")
             return
